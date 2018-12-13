@@ -147,12 +147,12 @@ syscall
 			
 			jr $ra
 
-Exit:
-	move $a0, $t5 #moves sum to a0
-	li $v0, 1 #prints contents of a0
-	syscall
-	li $v0,10 # ends program
-	syscall
+		Exit:
+			li $v0, 0
+			lw $ra, ($sp)
+			lw $s4, 4($sp) #highest power
+			lw $s5, 8($sp) #character array
+			lw $s6, 12($sp) #subsum
 	
 
 		Ascii_to_decimal:
