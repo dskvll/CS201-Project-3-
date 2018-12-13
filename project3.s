@@ -1,4 +1,4 @@
-#mips Project 2 base converter
+#mips Project 3 recursive base converter
 .data # Data declaration section
 too_long_input: .asciiz "Input is too long."
 out_of_range: .asciiz "Invalid base-27 number." 
@@ -97,13 +97,13 @@ Length_to_power:
 	
 li $t6,1500
 
-call_recursion:	
-	move $a0, $t1
-	move $a2, $t8
-	move $a3, $t3
-	jal Convert
+call_recursion:	#new label to introduce recursive function
+	move $a0, $t1 #moves the value  so that the information may be preserved
+	move $a2, $t8 #similar to above
+	move $a3, $t3 #similar to above
+	jal Convert# jumps to convert label and stores result in $31
 	
-move $a0, $v0		
+move $a0, $v0#copies the value into register for printing		
 li $v0, 1 #prints contents of a0
 syscall
 		
