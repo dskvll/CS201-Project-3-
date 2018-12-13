@@ -169,12 +169,12 @@ syscall
 			blt $a1, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
 			blt $a1, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
 	
-Capital_letter:
-	addi $t7, $t7, -55 #subtracts 55 to get the value in decimal
-	j multiply 	
+		Capital_letter:
+			addi $a1, $a1, -55 #subtracts 55 to get the value in decimal
+			j multiply 	
 
-Common_letter:
-	addi $t7, $t7, -87 #subtracts 87 to get the value in decimal
+		Common_letter:
+			addi $a1, $a1, -87 #subtracts 87 to get the value in decimal
 	j multiply	
 
 Number:
