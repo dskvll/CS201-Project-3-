@@ -96,10 +96,17 @@ Length_to_power:
 	j Length_to_power
 	
 call_recursion:	#new label to introduce recursive function
-	move $a0, $t1 #moves t1 to a0 so that the information may be preserved
+	move $a0, $t1 #moves the value  so that the information may be preserved
 	move $a2, $t8 #similar to above
 	move $a3, $t3 #similar to above
 	jal Convert# jumps to convert label and stores result in $31
+	
+move $a0, $v0	#copies the value into register for printing	
+li $v0, 1 #prints contents of a0
+syscall
+		
+li $v0,10 #ends program
+syscall
 	
 multiply:
 	mult $t7, $t1 #multiples the user input by the required base
