@@ -123,16 +123,22 @@ syscall
 		move $s4, $a0
 		move $s5, $a2
 		move $s7, $t3	
-multiply:
-	mult $t7, $t1 #multiples the user input by the required base
-	mflo $t4			# stores the multiplication value
-	add $t5, $t5, $t4 	# adds the values together to get the total
-	beq $t1, 1, Exit # if the base value is 1 then the exit function is called.
-	div $t1, $s0 #dividing t4 to the next power of base
-	mflo $t1 #moves value into $t1
-	add $t8, $t8, 1 #increments the number
-	lb $t7,0($t8) #loads the value of the number into t7
-	j Ascii_to_decimal #jumps to ascii convert function
+		
+		multiply:
+			mult $a1, $a0 		#multiples the user input by the current power
+			mflo $s6			#stores the multiplication value (the sub sum)
+			
+			div $a0, $s0 		#dividing $a0 to the next power of base
+			mflo $a0 			#moves value into $s4
+			
+			add $a2, $a2, 1 	#increments the pointer
+			addi $a3, $a3, -1
+		
+			jal Convert
+			
+			add $v0, $s6, $v0
+			
+			lw $ra, ($sp)
 
 Exit:
 	move $a0, $t5 #moves sum to a0
