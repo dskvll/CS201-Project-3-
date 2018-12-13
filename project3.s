@@ -107,7 +107,12 @@ syscall
 		
 li $v0,10 #ends program
 syscall
-	
+
+.globl Convert
+	Convert:
+		addi $sp, $sp, -20
+		sw $ra, ($sp)
+		sw $s4, 4($sp) #highest power	
 multiply:
 	mult $t7, $t1 #multiples the user input by the required base
 	mflo $t4			# stores the multiplication value
