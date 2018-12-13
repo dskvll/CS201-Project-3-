@@ -144,6 +144,7 @@ syscall
 			lw $s6, 12($sp) #subsum
 			lw $s7, 16($sp)
 			addi $sp, $sp, 20
+			jr $ra
 
 Exit:
 	move $a0, $t5 #moves sum to a0
