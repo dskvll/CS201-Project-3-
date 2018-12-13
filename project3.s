@@ -139,6 +139,11 @@ syscall
 			add $v0, $s6, $v0
 			
 			lw $ra, ($sp)
+			lw $s4, 4($sp) #highest power
+			lw $s5, 8($sp) #character array
+			lw $s6, 12($sp) #subsum
+			lw $s7, 16($sp)
+			addi $sp, $sp, 20
 
 Exit:
 	move $a0, $t5 #moves sum to a0
