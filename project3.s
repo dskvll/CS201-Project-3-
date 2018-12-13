@@ -179,7 +179,8 @@ syscall
 
 		Number:
 			addi $a1, $a1, -48 	##subtracts 48 to get the value in decimal
-			j multiply		
+			j multiply	
+				
 #begins implementing branches
 No_input_error:
 	la $a0, empty_input #loads string
@@ -202,6 +203,10 @@ Input_Long_Error:
 	syscall # calls operating system to do the preceding instruction
 	li $v0,10 #ends program
 	syscall # calls operating system to do the preceding instruction
+	
+Too_Long_Invalid:
+	bgt $t2, 3, Input_Long_Error
+	j Out_of_range_Error
 
 
 
