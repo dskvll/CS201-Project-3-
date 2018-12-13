@@ -118,7 +118,11 @@ syscall
 		sw $s7, 16($sp)
 		beq $a3, 0, Exit
 		
-		lb $a1, 0($a2)	
+		lb $a1, 0($a2)
+		
+		move $s4, $a0
+		move $s5, $a2
+		move $s7, $t3	
 multiply:
 	mult $t7, $t1 #multiples the user input by the required base
 	mflo $t4			# stores the multiplication value
