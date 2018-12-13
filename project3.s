@@ -153,6 +153,11 @@ syscall
 			lw $s4, 4($sp) #highest power
 			lw $s5, 8($sp) #character array
 			lw $s6, 12($sp) #subsum
+			lw $s7, 16($sp)
+			addi $sp, $sp, 20
+			
+			jr $ra
+			
 	
 
 		Ascii_to_decimal:
