@@ -27,6 +27,7 @@ beq $t7, 0 No_input_error # branches if there is literally no input in $t7
 addi $s0, $0, 27 #initialises the register with desired base
 addi $t5, $0, 0 	#initialises register for future use
 addi $t4, $0, 0	 # initialises register for use
+addi $t2, $0, 0 # initialises register for use
 addi $t1, $0, 1 	#initializes register for future use
 
 # processes spaces and disregards them
@@ -43,6 +44,7 @@ check_characters:
 	lb $t7,0($t8)# loads the byte value of $t8 into $t7	
 	addi $t8, $t8, 1 #increments
 	addi $t3, $t3, 1 #increments
+	addi $t2, $t2, 1 # increments
 	beq $t7, 10, restart_count # if the value in $t7 is empty it restarts the count
 	beq $t7, 0, restart_count  #if the value in $t7 is empty it restarts the count
 	bne $t7, 32, check_characters # if the user input is not equal to a space then check characters is run
@@ -51,6 +53,7 @@ check_characters_and_spaces:
 	lb $t7,0($t8) # loads the byte value of $t8 into $t7
 	addi $t8, $t8, 1 #increments
 	addi $t3, $t3, 1 #increments
+	addi $t2, $t2, 1 #increments
 	beq $t7, 10, restart_count# if the value in $t7 is empty it restarts the count
 	beq $t7, 0, restart_count#if the value in $t7 is empty it restarts the 
 	bne $t7, 32, Out_of_range_Error ## if the user input is not equal to a space then the input is not a valid input
