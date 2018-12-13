@@ -112,7 +112,13 @@ syscall
 	Convert:
 		addi $sp, $sp, -20
 		sw $ra, ($sp)
-		sw $s4, 4($sp) #highest power	
+		sw $s4, 4($sp) #highest power
+		sw $s5, 8($sp) #character array
+		sw $s6, 12($sp) #subsum
+		sw $s7, 16($sp)
+		beq $a3, 0, Exit
+		
+		lb $a1, 0($a2)	
 multiply:
 	mult $t7, $t1 #multiples the user input by the required base
 	mflo $t4			# stores the multiplication value
