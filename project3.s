@@ -144,6 +144,7 @@ syscall
 			lw $s6, 12($sp) #subsum
 			lw $s7, 16($sp)
 			addi $sp, $sp, 20
+			
 			jr $ra
 
 Exit:
@@ -154,14 +155,14 @@ Exit:
 	syscall
 	
 
-Ascii_to_decimal:
-	blt $t7, 48, Out_of_range_Error #checks if character is before 0 in ASCII chart and returns an error if so
-	blt $t7, 58, Number #checks if character is between 48 and 57 if so runs the numbers function
-	blt $t7, 65, Out_of_range_Error #checks if character is between 58 and 64 returns an error if so
-	blt $t7, 82, Capital_letter #checks if character is between 65 and 78 runs the capitals function
-	blt $t7, 97, Out_of_range_Error #checks if character is between 79 and 96 returns an error if so
-	blt $t7, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
-	blt $t7, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
+		Ascii_to_decimal:
+			blt $a1, 48, Out_of_range_Error #checks if character is before 0 in ASCII chart and returns an error if so
+			blt $a1, 58, Number #checks if character is between 48 and 57 if so runs the numbers function
+			blt $a1, 65, Out_of_range_Error #checks if character is between 58 and 64 returns an error if so
+			blt $a1, 82, Capital_letter #checks if character is between 65 and 78 runs the capitals function
+			blt $a1, 97, Out_of_range_Error #checks if character is between 79 and 96 returns an error if so
+			blt $t7, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
+			blt $t7, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
 	
 Capital_letter:
 	addi $t7, $t7, -55 #subtracts 55 to get the value in decimal
