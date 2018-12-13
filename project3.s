@@ -175,12 +175,11 @@ syscall
 
 		Common_letter:
 			addi $a1, $a1, -87 #subtracts 87 to get the value in decimal
-	j multiply	
+			j multiply	
 
-Number:
-	addi $t7, $t7, -48 	##subtracts 48 to get the value in decimal
-	j multiply				
-		
+		Number:
+			addi $a1, $a1, -48 	##subtracts 48 to get the value in decimal
+			j multiply		
 #begins implementing branches
 No_input_error:
 	la $a0, empty_input #loads string
