@@ -72,8 +72,6 @@ continue_check:
 	
 addi $t8, $t8, -1 #initialises value to ensure proper calculations
 
-mult $s3, $t7
-
 check_length:
 	lb $t7, ($t8) #loads value from t8 into t7
 	addi $t8, $t8, 1 #increments
@@ -90,8 +88,6 @@ reset_pointer:
 	lb $t7, ($t8) # loads the subracted value into t7
 	sub $s1, $t3, $t1 # stores the value of t3-t1 into s1
 
-addi $t9, $t9, 10
-
 Length_to_power:	
 	beq $s1, 0, Ascii_to_decimal	#Bringing base to last power of the string
 	mult $t1, $s0 #multiplies the base number by t1
@@ -99,8 +95,6 @@ Length_to_power:
 	sub $s1, $s1, 1 #decrements
 	j Length_to_power
 	
-addi $s4, $t7, 99
-
 multiply:
 	mult $t7, $t1 #multiples the user input by the required base
 	mflo $t4			# stores the multiplication value
