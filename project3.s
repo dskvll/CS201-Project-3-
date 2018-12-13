@@ -161,8 +161,8 @@ Exit:
 			blt $a1, 65, Out_of_range_Error #checks if character is between 58 and 64 returns an error if so
 			blt $a1, 82, Capital_letter #checks if character is between 65 and 78 runs the capitals function
 			blt $a1, 97, Out_of_range_Error #checks if character is between 79 and 96 returns an error if so
-			blt $t7, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
-			blt $t7, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
+			blt $a1, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
+			blt $a1, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
 	
 Capital_letter:
 	addi $t7, $t7, -55 #subtracts 55 to get the value in decimal
