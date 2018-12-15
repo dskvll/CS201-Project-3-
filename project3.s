@@ -185,10 +185,11 @@ syscall
 		
 		terminate:
 			li $v0, 0
-			lw $ra, ($sp)
-			lw $s4, 4($sp) #highest power
-			lw $s5, 8($sp) #character array
-			lw $s6, 12($sp) #subsum
+			lw $ra, 0($sp)	#reload so we can return them
+			lw $s6, 4($sp)	
+			addi $sp, $sp, 8	
+			
+			addi $sp, $sp, -4
 			lw $s7, 16($sp)
 			addi $sp, $sp, 20
 			
