@@ -120,18 +120,18 @@ syscall
 		lw $a0, 0($sp) #current power
 		lw $a2, 4($sp) #string address
 		lw $a3, 8($sp) #counter
-		addi $sp, $sp, 12
+		addi $sp, $sp, 12 #adds content of stack pointer with 12
 		
-		addi $sp, $sp, -8
-		sw $ra, 0($sp)
-		sw $s6, 4($sp)
+		addi $sp, $sp, -8 #subtracts 8 from pointer to ensure correct calculation
+		sw $ra, 0($sp) #stores value in ra in stack pointer 0
+		sw $s6, 4($sp) # stores value in s6 in stack pointer 4
 		
-		beq $a3, 0, Terminate
+		beq $a3, 0, Terminate #if a3 is empty then the loop terminates
 		
-		lb $a1, 0($a2)
+		lb $a1, 0($a2) # value stored in a2 is loaded into a1
 		
-		addi $a3, $a3, -1
-		addi $a2, $a2, 1
+		addi $a3, $a3, -1 #decreases counter
+		addi $a2, $a2, 1 #increments
 		
 		Ascii_to_decimal:
 			blt $a1, 48, Out_of_range_Error 	#checks if character is before 0 in ASCII chart and returns an error if so
@@ -139,7 +139,7 @@ syscall
 			blt $a1, 65, Out_of_range_Error 	#checks if character is between 58 and 64 returns an error if so
 			blt $a1, 82, Capital_letter 		#checks if character is between 65 and 78 runs the capitals function
 			blt $a1, 97, Out_of_range_Error 	#checks if character is between 79 and 96 returns an error if so
-			blt $a1, 114, Common_letter 		#checks if character is between 97 and 110 runs the capitals function
+			blt $a1, 114, Common_letter 		#checks if character is between 97 and 114 runs the capitals function
 			blt $a1, 128, Out_of_range_Error 	#checks if character is between 111 and 127 returns an error if so
 	
 		multiply:
@@ -216,5 +216,5 @@ Input_Long_Error:
 	syscall # calls operating system to do the preceding instruction
 	
 Too_Long_Invalid:
-	bgt $t2, 3, Input_Long_Error
+	bgt $t2, 3, #Input_Long_Error branches if value in regiser is greater than 3 this is to accomodate the change which requires us to print the input is too long for invalid characters
 	j Out_of_range_Error
