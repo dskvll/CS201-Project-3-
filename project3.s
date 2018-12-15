@@ -187,8 +187,8 @@ syscall
 			lw $s6, 4($sp)	#loads string address into s6
 			addi $sp, $sp, 8	#deallocates memory
 			
-			addi $sp, $sp, -4
-			sw $v0, 0($sp)
+			addi $sp, $sp, -4 
+			sw $v0, 0($sp) #stores value in v0 into stack
 			
 			jr $ra
 			
