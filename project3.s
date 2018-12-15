@@ -124,12 +124,15 @@ syscall
 		addi $sp, $sp, 12
 		sw $s7, 16($sp)
 		beq $a3, 0, terminate
+		addi $sp, $sp, -8
+		sw $ra, 0($sp)
+		sw $s6, 4($sp)
+		
+		beq $a3, 0, Terminate
+		
 		
 		lb $a1, 0($a2)
 		
-		move $s4, $a0
-		move $s5, $a2
-		move $s7, $t3
 		
 		Ascii_to_decimal:
 			blt $a1, 48, Out_of_range_Error #checks if character is before 0 in ASCII chart and returns an error if so
