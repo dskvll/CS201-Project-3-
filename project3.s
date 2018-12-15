@@ -1,18 +1,17 @@
 #mips Project 3 recursive base converter
 .data # Data declaration section
-too_long_input: .asciiz "Input is too long."
-out_of_range: .asciiz "Invalid base-27 number." 
-empty_input: .asciiz "Input is empty."
-user_input: .space 85000
+	too_long_input: .asciiz "Input is too long."
+	out_of_range: .asciiz "Invalid base-27 number." 
+	empty_input: .asciiz "Input is empty."
+	user_input: .space 85000
 .text # Assembly language instructions
 main: # Start of code section
 
-# begins getting user input
-
-li $v0, 8   # read string command
-la $a0, user_input #stores user string into register
+					#begins getting user input
+li $v0, 8   		#read string command
+la $a0, user_input 	#stores user string into register
 li $a1, 85000 
-syscall # calls previous instructions
+syscall 			#calls previous instructions
 
 add $t7, $0, 0 #initialises register
 add $t7, $0, 0 #initialises register
@@ -27,7 +26,7 @@ beq $t7, 0 No_input_error # branches if there is literally no input in $t7
 addi $s0, $0, 27 #initialises the register with desired base
 addi $t5, $0, 0 	#initialises register for future use
 addi $t4, $0, 0	 # initialises register for use
-addi $t2, $0, 0
+addi $t2, $0, 0 #initialises register
 addi $t1, $0, 1 	#initializes register for future use
 
 # processes spaces and disregards them
@@ -83,10 +82,10 @@ check_length:
 	j check_length # jumps to check length function
 	
 reset_pointer:
-	sub $t8, $t8, $t3 # subtracts the pointer from t8 and stores it in t8
-	sub $t3, $t3, $t1 #subtracts t1 from t3 and stores it in t3
-	lb $t7, ($t8) #loads the subracted value into t7
-	sub $s1, $t3, $t1 # stores the value of t3-t1 into s1
+	sub $t8, $t8, $t3 	#subtracts the pointer from t8 and stores it in t8
+	lb $t7, ($t8) 		#loads the subracted value into t7
+	sub $t3, $t3, $t1 	#subtracts t1 from t3 and stores it in t3
+	sub $s1, $t3, $t1 	#stores the value of t3-t1 into s1
 	
 Length_to_power:	
 	beq $s1, 0, call_recursion	#Bringing base to last power of the string
@@ -94,19 +93,20 @@ Length_to_power:
 	mflo $t1 #stores the value into t1
 	sub $s1, $s1, 1 #decrements
 	j Length_to_power
-	
 li $t6,1500
 
 call_recursion:	#new label to introduce recursive function
-	move $a0, $t1 #moves the value  so that the information may be preserved
-	move $a2, $t8 #similar to above
-	move $a3, $t3 #similar to above
+	move $a0, $t1#moves the value  so that the information may be preserved
+	move $a2, $t8#similar to above
+	move $a3, $t3#similar to above
+	
 	addi $sp, $sp, -12	#allocate memory
 	sw $t1, 0($sp)		#highest power
 	sw $t8, 4($sp) 		#string address
 	sw $t3, 8($sp)		#counter
 
 	jal ChangeBase #calls the change_base
+	
 	lw $a0, 0($sp)
 	addi $sp, $sp, 4
 
@@ -116,20 +116,17 @@ call_recursion:	#new label to introduce recursive function
 li $v0,10 #ends program
 syscall
 
-
-		ChangeBase:
+	ChangeBase:
 		lw $a0, 0($sp) #current power
 		lw $a2, 4($sp) #string address
 		lw $a3, 8($sp) #counter
 		addi $sp, $sp, 12
-		sw $s7, 16($sp)
-		beq $a3, 0, terminate
+		
 		addi $sp, $sp, -8
 		sw $ra, 0($sp)
 		sw $s6, 4($sp)
 		
 		beq $a3, 0, Terminate
-		
 		
 		lb $a1, 0($a2)
 		
@@ -137,15 +134,15 @@ syscall
 		addi $a2, $a2, 1
 		
 		Ascii_to_decimal:
-			blt $a1, 48, Out_of_range_Error #checks if character is before 0 in ASCII chart and returns an error if so
-			blt $a1, 58, Number #checks if character is between 48 and 57 if so runs the numbers function
-			blt $a1, 65, Out_of_range_Error #checks if character is between 58 and 64 returns an error if so
-			blt $a1, 82, Capital_letter #checks if character is between 65 and 78 runs the capitals function
-			blt $a1, 97, Out_of_range_Error #checks if character is between 79 and 96 returns an error if so
-			blt $a1, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
-			blt $a1, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
+			blt $a1, 48, Out_of_range_Error 	#checks if character is before 0 in ASCII chart and returns an error if so
+			blt $a1, 58, Number 				#checks if character is between 48 and 57 if so runs the numbers function
+			blt $a1, 65, Out_of_range_Error 	#checks if character is between 58 and 64 returns an error if so
+			blt $a1, 82, Capital_letter 		#checks if character is between 65 and 78 runs the capitals function
+			blt $a1, 97, Out_of_range_Error 	#checks if character is between 79 and 96 returns an error if so
+			blt $a1, 114, Common_letter 		#checks if character is between 97 and 110 runs the capitals function
+			blt $a1, 128, Out_of_range_Error 	#checks if character is between 111 and 127 returns an error if so
 	
-		convert:
+		multiply:
 			mult $a1, $a0 		#multiples the user input by the current power
 			mflo $s6			#stores the multiplication value (the sub sum)
 			
@@ -171,19 +168,20 @@ syscall
 			sw $v0, 0($sp)
 			
 			jr $ra
+			
 		Capital_letter:
 			addi $a1, $a1, -55 #subtracts 55 to get the value in decimal
-			j convert 	
+			j multiply 	
 
 		Common_letter:
 			addi $a1, $a1, -87 #subtracts 87 to get the value in decimal
-			j convert	
+			j multiply	
 
 		Number:
 			addi $a1, $a1, -48 	##subtracts 48 to get the value in decimal
-			j convert				
+			j multiply				
 		
-		terminate:
+		Terminate:
 			li $v0, 0
 			lw $ra, 0($sp)	#reload so we can return them
 			lw $s6, 4($sp)	
@@ -208,7 +206,6 @@ Out_of_range_Error:
 	syscall # calls operating system to do the preceding instruction
 	li $v0,10 #ends program
 	syscall	 # calls operating system to do the preceding instruction
-
 
 Input_Long_Error:
 	la $a0, too_long_input #loads string
