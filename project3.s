@@ -152,10 +152,12 @@ syscall
 			div $a0, $s0 		#dividing $a0 to the next power of base
 			mflo $a0 			#moves value into $s4
 			
-			add $a2, $a2, 1 	#increments the pointer
-			addi $a3, $a3, -1
-		
-			jal Convert
+			addi $sp, $sp, -12
+			sw $a0, 0($sp) #current power
+			sw $a2, 4($sp) #string address
+			sw $a3, 8($sp) #counter
+
+			jal ChangeBase
 			
 			add $v0, $s6, $v0
 			
