@@ -133,6 +133,8 @@ syscall
 		
 		lb $a1, 0($a2)
 		
+		addi $a3, $a3, -1
+		addi $a2, $a2, 1
 		
 		Ascii_to_decimal:
 			blt $a1, 48, Out_of_range_Error #checks if character is before 0 in ASCII chart and returns an error if so
