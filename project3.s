@@ -107,8 +107,8 @@ call_recursion:	#new label to introduce recursive function
 
 	jal ChangeBase #calls the change_base
 	
-	lw $a0, 0($sp)
-	addi $sp, $sp, 4
+	lw $a0, 0($sp) #loads highest power into a0
+	addi $sp, $sp, 4 #allocates memory
 
 	li $v0, 1 # prints contents of a0
 	syscall
@@ -156,16 +156,16 @@ syscall
 
 			jal ChangeBase
 			
-			lw $v0, 0($sp)
-			addi $sp, $sp, 4 
+			lw $v0, 0($sp) #loads current power into v0
+			addi $sp, $sp, 4 #allocates memory
 			add $v0, $s6, $v0	# adding up the rest of the calculation for the input
 			
 			lw $ra, 0($sp)	#reload so we can return them
-			lw $s6, 4($sp)	
+			lw $s6, 4($sp)	#loads value of string address into s6
 			addi $sp, $sp, 8	
 			
 			addi $sp, $sp, -4
-			sw $v0, 0($sp)
+			sw $v0, 0($sp)#stores v0 into stack
 			
 			jr $ra
 			
@@ -184,8 +184,8 @@ syscall
 		Terminate:
 			li $v0, 0
 			lw $ra, 0($sp)	#reload so we can return them
-			lw $s6, 4($sp)	
-			addi $sp, $sp, 8	
+			lw $s6, 4($sp)	#loads string address into s6
+			addi $sp, $sp, 8	#deallocates memory
 			
 			addi $sp, $sp, -4
 			sw $v0, 0($sp)
@@ -216,5 +216,5 @@ Input_Long_Error:
 	syscall # calls operating system to do the preceding instruction
 	
 Too_Long_Invalid:
-	bgt $t2, 3, #Input_Long_Error branches if value in regiser is greater than 3 this is to accomodate the change which requires us to print the input is too long for invalid characters
+	bgt $t2, 3,Input_Long_Error #Input_Long_Error branches if value in regiser is greater than 3 this is to accomodate the change which requires us to print the input is too long for invalid characters
 	j Out_of_range_Error
