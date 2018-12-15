@@ -159,12 +159,12 @@ syscall
 
 			jal ChangeBase
 			
-			add $v0, $s6, $v0
+			lw $v0, 0($sp)
+			addi $sp, $sp, 4 
+			add $v0, $s6, $v0	# adding up the rest of the calculation for the input
 			
-			lw $ra, ($sp)
-			lw $s4, 4($sp) #highest power
-			lw $s5, 8($sp) #character array
-			lw $s6, 12($sp) #subsum
+			lw $ra, 0($sp)	#reload so we can return them
+			lw $s6, 4($sp)	
 			lw $s7, 16($sp)
 			addi $sp, $sp, 20
 			
