@@ -101,13 +101,12 @@ call_recursion:	#new label to introduce recursive function
 	move $a0, $t1 #moves the value  so that the information may be preserved
 	move $a2, $t8 #similar to above
 	move $a3, $t3 #similar to above
-	jal Convert# jumps to convert label and stores result in $31
-	
-move $a0, $v0#copies the value into register for printing		
-li $v0, 1 #prints contents of a0
-syscall
-		
-li $v0,10 #ends program
+	addi $sp, $sp, -12	#allocate memory
+	sw $t1, 0($sp)		#highest power
+	sw $t8, 4($sp) 		#string address
+	sw $t3, 8($sp)		#counter
+
+	jal ChangeBase #calls the change_base
 syscall
 
 .globl Convert
@@ -118,7 +117,7 @@ syscall
 		sw $s5, 8($sp) #character array
 		sw $s6, 12($sp) #subsum
 		sw $s7, 16($sp)
-		beq $a3, 0, Exit
+		beq $a3, 0, terminate
 		
 		lb $a1, 0($a2)
 		
@@ -135,7 +134,7 @@ syscall
 			blt $a1, 114, Common_letter #checks if character is between 97 and 110 runs the capitals function
 			blt $a1, 128, Out_of_range_Error #checks if character is between 111 and 127 returns an error if so
 	
-		multiply:
+		convert:
 			mult $a1, $a0 		#multiples the user input by the current power
 			mflo $s6			#stores the multiplication value (the sub sum)
 			
@@ -160,17 +159,17 @@ syscall
 	
 		Capital_letter:
 			addi $a1, $a1, -55 #subtracts 55 to get the value in decimal
-			j multiply 	
+			j convert 	
 
 		Common_letter:
 			addi $a1, $a1, -87 #subtracts 87 to get the value in decimal
-			j multiply	
+			j convert	
 
 		Number:
 			addi $a1, $a1, -48 	##subtracts 48 to get the value in decimal
-			j multiply				
+			j convert				
 		
-		Exit:
+		terminate:
 			li $v0, 0
 			lw $ra, ($sp)
 			lw $s4, 4($sp) #highest power
