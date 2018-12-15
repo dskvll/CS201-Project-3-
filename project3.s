@@ -116,13 +116,12 @@ call_recursion:	#new label to introduce recursive function
 li $v0,10 #ends program
 syscall
 
-.globl Convert
-	Convert:
-		addi $sp, $sp, -20
-		sw $ra, ($sp)
-		sw $s4, 4($sp) #highest power
-		sw $s5, 8($sp) #character array
-		sw $s6, 12($sp) #subsum
+
+		ChangeBase:
+		lw $a0, 0($sp) #current power
+		lw $a2, 4($sp) #string address
+		lw $a3, 8($sp) #counter
+		addi $sp, $sp, 12
 		sw $s7, 16($sp)
 		beq $a3, 0, terminate
 		
