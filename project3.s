@@ -190,8 +190,7 @@ syscall
 			addi $sp, $sp, 8	
 			
 			addi $sp, $sp, -4
-			lw $s7, 16($sp)
-			addi $sp, $sp, 20
+			sw $v0, 0($sp)
 			
 			jr $ra
 			
