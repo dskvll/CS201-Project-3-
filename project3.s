@@ -165,11 +165,12 @@ syscall
 			
 			lw $ra, 0($sp)	#reload so we can return them
 			lw $s6, 4($sp)	
-			lw $s7, 16($sp)
-			addi $sp, $sp, 20
+			addi $sp, $sp, 8	
+			
+			addi $sp, $sp, -4
+			sw $v0, 0($sp)
 			
 			jr $ra
-	
 		Capital_letter:
 			addi $a1, $a1, -55 #subtracts 55 to get the value in decimal
 			j convert 	
