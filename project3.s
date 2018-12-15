@@ -107,6 +107,13 @@ call_recursion:	#new label to introduce recursive function
 	sw $t3, 8($sp)		#counter
 
 	jal ChangeBase #calls the change_base
+	lw $a0, 0($sp)
+	addi $sp, $sp, 4
+
+	li $v0, 1 # prints contents of a0
+	syscall
+		
+li $v0,10 #ends program
 syscall
 
 .globl Convert
